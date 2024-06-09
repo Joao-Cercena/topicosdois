@@ -2,6 +2,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { OngsEntity } from 'src/ongs/ongs.entity';
 import { SetorEntity } from 'src/setor/setor.entity';
+import { DoadorEntity } from 'src/doador/doador.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
     type: 'postgres',
