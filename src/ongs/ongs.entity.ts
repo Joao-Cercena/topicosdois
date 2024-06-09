@@ -1,5 +1,5 @@
 import { SetorEntity } from 'src/setor/setor.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'ongs' })
 export class OngsEntity {
@@ -24,6 +24,9 @@ export class OngsEntity {
   @Column({ length: 1 })
   ativo: string;
 
-  @ManyToMany(() => SetorEntity, (setor) => setor.id)
-  setor: SetorEntity[]
+
+  @ManyToOne(() => SetorEntity)
+@JoinColumn() 
+setor: SetorEntity;
+
 }
