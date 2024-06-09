@@ -1,6 +1,7 @@
 
 import {
     IsDateString,
+    IsEmail,
     IsEnum,
     IsNotEmpty,
     IsOptional,
@@ -19,5 +20,9 @@ import {
   
     @IsNotEmpty({ message: 'O CNPJ não pode ser vazio' })
     cnpj: string;
+
+    @IsEmail({}, { message: 'O campo email deve ser um endereço de email válido' })
+    @IsNotEmpty({ message: 'O campo email não pode ser vazio' })
+    email: string;
   }
   

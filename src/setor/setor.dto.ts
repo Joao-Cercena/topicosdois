@@ -15,4 +15,6 @@ import {
     @IsString({ message: 'O campo nome deve ser do tipo texto' })
     @IsNotEmpty({ message: 'O nome não pode ser vazio' })
     nome: string;
+
+    ativo: string;
   }

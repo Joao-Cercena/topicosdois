@@ -7,12 +7,14 @@ import {
   import { OngsEntity } from './ongs.entity';
   import { InjectRepository } from '@nestjs/typeorm';
   import { OngsDto } from './ongs.dto';
+  import { SetorEntity } from 'src/setor/setor.entity';
   
   @Injectable()
   export class OngsService {
     constructor(
       @InjectRepository(OngsEntity)
       private ongsRepository: Repository<OngsEntity>,
+      private setorRepository: Repository<SetorEntity>,
     ) {}
   
     findAll() {
@@ -55,15 +57,39 @@ import {
     }
   
     private validateOngs(ongs: OngsEntity | OngsDto) {
-      this.validateOngsCNPJ(ongs);
+      this.validateOngsCNPJ(ongs.cnpj);
+      this.validateOngNome(ongs.nome);
+      this.validateOngEmail(ongs.email);
     }
   
-    private validateOngsCNPJ(ongs: OngsEntity | OngsDto) {
-      const dataAtual = new Date();
-      const cnpj = ongs.cnpj;
+
+    private validateOngNome(nome: string) {
+      const existingOng =  this.ongsRepository.findOne({ where: { nome } });
+      if (existingOng) {
+        throw new Error('Uma ONG com esse nome já existe.');
+      }
+    }
+
+    
+    private validateOngsCNPJ(cnpj: string){
   
       if (cnpj.length < 14) {
         throw new BadRequestException('O CNPJ deve ter 14 caracteres!');
       }
+
+      const existingOng =  this.ongsRepository.findOne({ where: { cnpj } });
+      if (existingOng) {
+        throw new Error('Uma ONG com esse CNPJ já existe.');
+      }
     }
+    
+    
+    private validateOngEmail(email: string) {
+      const existingOng =  this.ongsRepository.findOne({ where: { email } });
+      if (existingOng) {
+        throw new Error('Um cadastro com esse e-mail já existe.');
+      }
+    }
+    
+    
   }
