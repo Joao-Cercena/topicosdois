@@ -6,6 +6,7 @@ import {
     Param,
     Post,
     Put,
+    Query
   } from '@nestjs/common';
   import { OngsService } from './ongs.service';
   import { OngsDto } from './ongs.dto';
@@ -23,6 +24,11 @@ import {
     findById(@Param('id') id: string) {
       return this.ongsService.findById(id);
     }
+
+    @Get('search')
+    async search(@Query() query: any) {
+    return this.ongsService.search(query);
+  }
   
     @Delete(':id')
     remove(@Param('id') id: string) {

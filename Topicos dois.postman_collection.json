@@ -1,0 +1,460 @@
+{
+	"info": {
+		"_postman_id": "2822eb2f-f0a8-4df7-957a-195253e7e389",
+		"name": "Topicos dois",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31393873"
+	},
+	"item": [
+		{
+			"name": "Ongs Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Nome único erro\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.error === 'Uma ONG com esse nome já existe.') {\r",
+							"        pm.expect(responseJson.error).to.eql('Uma ONG com esse nome já existe.');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"CNPJ único erro\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.error === 'Uma ONG com esse CNPJ já existe.') {\r",
+							"        pm.expect(responseJson.error).to.eql('Uma ONG com esse CNPJ já existe.');\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Email único erro\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    if (responseJson.error === 'Um cadastro com esse e-mail já existe.') {\r",
+							"        pm.expect(responseJson.error).to.eql('Um cadastro com esse e-mail já existe.');\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"ong example\",\r\n  \"cnpj\": \"31232309128543\",\r\n  \"email\" : \"ongsexample@gmail.com\",\r\n  \"endereco\": \"endereco example\",\r\n  \"pedido\": \"pedido example\",\r\n  \"ativo\": \"A\",\r\n  \"setorId\": {\r\n    \"id\": 1\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/setor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ongs Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/setor/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setor",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ongs Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"ong example update\",\r\n  \"cnpj\": \"31232309128543\",\r\n  \"email\" : \"ongsexample@gmail.com\",\r\n  \"endereco\": \"endereco example\",\r\n  \"pedido\": \"pedido example\",\r\n  \"ativo\": \"A\",\r\n  \"setorId\": {\r\n    \"id\": 1\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/ongs/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ongs",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ongs Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/ongs/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ongs",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Setor Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Nome do setor já existe\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(pm.response.code).to.not.equal(400, \"Um setor com esse nome já existe\");\r",
+							"    pm.expect(jsonData.message).to.not.equal(\"Um setor com esse nome já existe\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Nome do setor comprimento mínimo\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(pm.response.code).to.not.equal(400, \"O nome do setor deve ter pelo menos 3 caracteres\");\r",
+							"    pm.expect(jsonData.message).to.not.equal(\"O nome do setor deve ter pelo menos 3 caracteres\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"Limpeza\",\r\n  \"ativo\": \"A\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/setor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Setor Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/setor/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setor",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Setor Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Setor não pode ser inativado enquanto houver ONGs associadas\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(pm.response.code).to.not.equal(400, \"O setor não pode ser inativado enquanto houver ONGs associadas\");\r",
+							"    pm.expect(jsonData.message).to.not.equal(\"O setor não pode ser inativado enquanto houver ONGs associadas\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"Higiene pessoal\",\r\n  \"ativo\": \"A\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/setor/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setor",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Setor Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/setor/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setor",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doador Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"O doador deve ter pelo menos 18 anos\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(pm.response.code).to.not.equal(400, \"O doador deve ter pelo menos 18 anos\");\r",
+							"    pm.expect(jsonData.message).to.not.equal(\"O doador deve ter pelo menos 18 anos\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"O email já está em uso\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(pm.response.code).to.not.equal(400, \"O email já está em uso\");\r",
+							"    pm.expect(jsonData.message).to.not.equal(\"O email já está em uso\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"O CPF é inválido\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(pm.response.code).to.not.equal(400, \"O CPF é inválido\");\r",
+							"    pm.expect(jsonData.message).to.not.equal(\"O CPF é inválido\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"doador exaple\",\r\n  \"cpf\": \"08095619990\",\r\n  \"email\": \"doadorexample@gmail.com\",\r\n  \"data_nascimento\": \"2001-09-27\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/doador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"doador"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doador Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/setor/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setor",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doador Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"doador exaple update\",\r\n  \"cpf\": \"08095619990\",\r\n  \"email\": \"doadorexample@gmail.com\",\r\n  \"data_nascimento\": \"2001-09-27\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/doador/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"doador",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doador Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/doador/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"doador",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

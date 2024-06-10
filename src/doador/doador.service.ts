@@ -14,6 +14,22 @@ export class DoadorService {
     return this.doadorRepository.find();
   }
 
+  async search(query: any): Promise<DoadorEntity[]> {
+    const qb = this.doadorRepository.createQueryBuilder('doador');
+    if (query.nome) {
+      qb.andWhere('doador.nome LIKE :nome', { nome: `%${query.nome}%` });
+    }
+    if (query.cnpj) {
+      qb.andWhere('doador.cpf = :cpf', { cpf: query.cpf });
+    }
+
+    if (query.email) {
+      qb.andWhere('doador.email LIKE :email', { email: query.email });
+    }
+    
+    return qb.getMany();
+  }
+
   async findOne(id: string): Promise<DoadorEntity> {
     const doador = await this.doadorRepository.findOne({ where: { id } });
     if (!doador) {

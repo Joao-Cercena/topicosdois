@@ -33,6 +33,22 @@ import {
       }
       return findOne;
     }
+
+    async search(query: any): Promise<OngsEntity[]> {
+      const qb = this.ongsRepository.createQueryBuilder('ongs');
+      if (query.nome) {
+        qb.andWhere('ongs.nome LIKE :nome', { nome: `%${query.nome}%` });
+      }
+      if (query.cnpj) {
+        qb.andWhere('ongs.cnpj = :cnpj', { cnpj: query.cnpj });
+      }
+
+      if (query.email) {
+        qb.andWhere('ongs.email = :email', { email: query.email });
+      }
+      
+      return qb.getMany();
+    }
   
     async remove(id: string) {
       const findById = await this.findById(id);

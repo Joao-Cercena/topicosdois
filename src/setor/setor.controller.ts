@@ -6,6 +6,7 @@ import {
     Param,
     Post,
     Put,
+    Query
   } from '@nestjs/common';
   import { SetorService } from './setor.service';
   import { SetorDto } from './setor.dto';
@@ -23,6 +24,11 @@ import {
     findById(@Param('id') id: string) {
       return this.setorService.findById(id);
     }
+
+    @Get('search')
+    async search(@Query() query: any) {
+    return this.setorService.search(query);
+  }
   
     @Delete(':id')
     remove(@Param('id') id: string) {

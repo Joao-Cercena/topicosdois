@@ -31,6 +31,22 @@ import { OngsEntity } from 'src/ongs/ongs.entity';
       }
       return findOne;
     }
+
+    async search(query: any): Promise<SetorEntity[]> {
+      const qb = this.setorRepository.createQueryBuilder('setor');
+      if (query.nome) {
+        qb.andWhere('setor.nome LIKE :nome', { nome: `%${query.nome}%` });
+      }
+      if (query.id) {
+        qb.andWhere('setor.id = :id', { id: query.id });
+      }
+
+      if (query.ativo) {
+        qb.andWhere('setor.ativo = :ativo', { ativo: query.ativo });
+      }
+      
+      return qb.getMany();
+    }
   
     async remove(id: string) {
       const findById = await this.findById(id);

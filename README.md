@@ -22,17 +22,38 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Descrição
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Instalação
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+```bash
+$ npm install @nestjs/serve-static
+```
+
+```bash
+$ npm install @nestjs/typeorm typeorm sqlite3
+```
+
+## Executar o app
+
+<p>Configurar os arquivos data-sorce.ts e data-source-seed.ts de acordo com o seu banco de dados.</p>
+<p>Executar os comandos abaixo</p>
+
+```bash
+# migration
+$ npx typeorm -d ./dist/db/data-source.js migration:run
+```
+
+```bash
+# seed
+$ npx typeorm-extension seed -d db/data-source-seed.ts
+```
 
 ```bash
 # development
@@ -45,7 +66,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Teste
 
 ```bash
 # unit tests
@@ -58,16 +79,27 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+```bash
+# para executar (padrão)
+$ localhost:3000
+
+```
+
+## Suporte NestJs
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Suporte Repositório
+
+- João Cercená - joaov.cercena@gmail.com
+- Bruno Dimas - ndbruno564@gmail.com
+
+## Contatos NestJs
 
 - Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+## Licença
 
 Nest is [MIT licensed](LICENSE).

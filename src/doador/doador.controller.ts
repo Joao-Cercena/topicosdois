@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, Query } from '@nestjs/common';
 import { DoadorEntity } from './doador.entity';
 import { DoadorService } from './doador.service';
 
@@ -15,6 +15,11 @@ export class DoadorController {
   async findOne(@Param('id') id: string): Promise<DoadorEntity> {
     return this.doadorService.findOne(id);
   }
+
+  @Get('search')
+  async search(@Query() query: any) {
+  return this.doadorService.search(query);
+}
 
   @Post()
   async create(@Body() doadorData: DoadorEntity): Promise<DoadorEntity> {
