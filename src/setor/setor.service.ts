@@ -17,9 +17,14 @@ import { OngsEntity } from 'src/ongs/ongs.entity';
       private ongsRepository: Repository<OngsEntity>,
     ) {}
   
-    findAll() {
-      return this.setorRepository.find({
+  
+
+    async findAll(page: number = 1, limit: number = 10): Promise<SetorEntity[]> {
+      const [result, total] = await this.setorRepository.findAndCount({
+        take: limit,
+        skip: (page - 1) * limit,
       });
+      return result;
     }
   
     async findById(id: string): Promise<SetorEntity> {

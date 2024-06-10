@@ -16,8 +16,11 @@ import {
     constructor(private setorService: SetorService) {}
   
     @Get()
-    findAll() {
-      return this.setorService.findAll();
+    async findAll(
+      @Query('page') page: number,
+      @Query('limit') limit: number,
+    ) {
+      return this.setorService.findAll(page, limit);
     }
   
     @Get(':id')

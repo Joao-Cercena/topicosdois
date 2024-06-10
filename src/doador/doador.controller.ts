@@ -7,8 +7,11 @@ export class DoadorController {
   constructor(private readonly doadorService: DoadorService) {}
 
   @Get()
-  async findAll(): Promise<DoadorEntity[]> {
-    return this.doadorService.findAll();
+  async findAll(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.doadorService.findAll(page, limit);
   }
 
   @Get(':id')

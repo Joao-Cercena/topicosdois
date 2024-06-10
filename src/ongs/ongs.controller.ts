@@ -16,8 +16,11 @@ import {
     constructor(private ongsService: OngsService) {}
   
     @Get()
-    findAll() {
-      return this.ongsService.findAll();
+    async findAll(
+      @Query('page') page: number,
+      @Query('limit') limit: number,
+    ) {
+      return this.ongsService.findAll(page, limit);
     }
   
     @Get(':id')

@@ -16,11 +16,14 @@ import {
       private ongsRepository: Repository<OngsEntity>,
       private setorRepository: Repository<SetorEntity>,
     ) {}
-  
-    findAll() {
-      return this.ongsRepository.find({
-        relations: { setor: true },
+ 
+
+    async findAll(page: number = 1, limit: number = 10): Promise<OngsEntity[]> {
+      const [result, total] = await this.ongsRepository.findAndCount({
+        take: limit,
+        skip: (page - 1) * limit,
       });
+      return result;
     }
   
     async findById(id: string): Promise<OngsEntity> {

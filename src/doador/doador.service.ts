@@ -10,8 +10,14 @@ export class DoadorService {
     private readonly doadorRepository: Repository<DoadorEntity>,
   ) {}
 
-  async findAll(): Promise<DoadorEntity[]> {
-    return this.doadorRepository.find();
+
+
+  async findAll(page: number = 1, limit: number = 10): Promise<DoadorEntity[]> {
+    const [result, total] = await this.doadorRepository.findAndCount({
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+    return result;
   }
 
   async search(query: any): Promise<DoadorEntity[]> {
