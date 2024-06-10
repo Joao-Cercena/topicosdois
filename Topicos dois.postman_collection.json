@@ -50,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"ong example\",\r\n  \"cnpj\": \"31232309128543\",\r\n  \"email\" : \"ongsexample@gmail.com\",\r\n  \"endereco\": \"endereco example\",\r\n  \"pedido\": \"pedido example\",\r\n  \"ativo\": \"A\",\r\n  \"setorId\": {\r\n    \"id\": 1\r\n  }\r\n}",
+					"raw": "{\r\n  \"nome\": \"ong ex\",\r\n  \"cnpj\": \"31232309128123\",\r\n  \"email\" : \"ongs@gmail.com\",\r\n  \"endereco\": \"endereco example\",\r\n  \"pedido\": \"pedido example\",\r\n  \"ativo\": \"A\",\r\n  \"setorId\": \"76f23dd7-2e9e-407f-935e-3aa643c5623f\"\r\n  \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,14 +58,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/setor",
+					"raw": "http://localhost:3000/ongs",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"setor"
+						"ongs"
 					]
 				}
 			},
@@ -104,7 +104,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": 1,\r\n  \"nome\": \"ong example update\",\r\n  \"cnpj\": \"31232309128543\",\r\n  \"email\" : \"ongsexample@gmail.com\",\r\n  \"endereco\": \"endereco example\",\r\n  \"pedido\": \"pedido example\",\r\n  \"ativo\": \"A\",\r\n  \"setorId\": {\r\n    \"id\": 1\r\n  }\r\n}",
+					"raw": "{\r\n  \"nome\": \"ong example update\",\r\n  \"cnpj\": \"31232309128543\",\r\n  \"email\" : \"ongsexample@gmail.com\",\r\n  \"endereco\": \"endereco example\",\r\n  \"pedido\": \"pedido example\",\r\n  \"ativo\": \"A\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

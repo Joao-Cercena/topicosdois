@@ -7,14 +7,12 @@ import {
   import { OngsEntity } from './ongs.entity';
   import { InjectRepository } from '@nestjs/typeorm';
   import { OngsDto } from './ongs.dto';
-  import { SetorEntity } from 'src/setor/setor.entity';
   
   @Injectable()
   export class OngsService {
     constructor(
       @InjectRepository(OngsEntity)
       private ongsRepository: Repository<OngsEntity>,
-      private setorRepository: Repository<SetorEntity>,
     ) {}
  
 
@@ -62,7 +60,7 @@ import {
     async create(dto: OngsDto) {
       const newOngs = this.ongsRepository.create(dto);
   
-      this.validateOngs(newOngs);
+      await this.validateOngs(newOngs);
   
       return this.ongsRepository.save(newOngs);
     }
@@ -70,43 +68,41 @@ import {
     async update(ongs: OngsDto) {
       await this.findById(ongs.id);
   
-      this.validateOngs(ongs);
-  
       return this.ongsRepository.save(ongs);
     }
   
-    private validateOngs(ongs: OngsEntity | OngsDto) {
-      this.validateOngsCNPJ(ongs.cnpj);
-      this.validateOngNome(ongs.nome);
-      this.validateOngEmail(ongs.email);
+    private async  validateOngs(ongs: OngsEntity | OngsDto) {
+      await this.validateOngsCNPJ(ongs.cnpj);
+      await this.validateOngNome(ongs.nome);
+      await this.validateOngEmail(ongs.email);
     }
   
 
-    private validateOngNome(nome: string) {
-      const existingOng =  this.ongsRepository.findOne({ where: { nome } });
+    private async validateOngNome(nome: string) {
+      const existingOng = await  this.ongsRepository.findOne({ where: { nome } });
       if (existingOng) {
-        throw new Error('Uma ONG com esse nome já existe.');
+        throw new BadRequestException('Uma ONG com esse nome já existe.');
       }
     }
 
     
-    private validateOngsCNPJ(cnpj: string){
+    private async validateOngsCNPJ(cnpj: string){
   
       if (cnpj.length < 14) {
         throw new BadRequestException('O CNPJ deve ter 14 caracteres!');
       }
 
-      const existingOng =  this.ongsRepository.findOne({ where: { cnpj } });
+      const existingOng = await this.ongsRepository.findOne({ where: { cnpj } });
       if (existingOng) {
-        throw new Error('Uma ONG com esse CNPJ já existe.');
+        throw new BadRequestException('Uma ONG com esse CNPJ já existe.');
       }
     }
     
     
-    private validateOngEmail(email: string) {
-      const existingOng =  this.ongsRepository.findOne({ where: { email } });
+    private async validateOngEmail(email: string) {
+      const existingOng =  await this.ongsRepository.findOne({ where: { email } });
       if (existingOng) {
-        throw new Error('Um cadastro com esse e-mail já existe.');
+        throw new BadRequestException('Um cadastro com esse e-mail já existe.');
       }
     }
     

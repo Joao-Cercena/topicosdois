@@ -24,7 +24,7 @@ import {
     }
   
     @Get(':id')
-    findById(@Param('id') id: string) {
+    async findById(@Param('id') id: string) {
       return this.ongsService.findById(id);
     }
 

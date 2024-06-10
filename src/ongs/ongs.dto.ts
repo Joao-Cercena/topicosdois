@@ -24,5 +24,7 @@ import {
     @IsEmail({}, { message: 'O campo email deve ser um endereço de email válido' })
     @IsNotEmpty({ message: 'O campo email não pode ser vazio' })
     email: string;
+
+    setorId: string;
   }
   

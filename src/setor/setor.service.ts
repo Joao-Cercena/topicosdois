@@ -1,21 +1,22 @@
 import {
-    BadRequestException,
-    Injectable,
-    NotFoundException,
-  } from '@nestjs/common';
-  import { Repository } from 'typeorm';
-  import { SetorEntity } from './setor.entity';
-  import { InjectRepository } from '@nestjs/typeorm';
-  import { SetorDto } from './setor.dto'
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { SetorEntity } from './setor.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SetorDto } from './setor.dto'
 import { OngsEntity } from 'src/ongs/ongs.entity';
-  
-  @Injectable()
-  export class SetorService {
-    constructor(
-      @InjectRepository(SetorEntity)
-      private setorRepository: Repository<SetorEntity>,
-      private ongsRepository: Repository<OngsEntity>,
-    ) {}
+
+@Injectable()
+export class SetorService {
+  constructor(
+    @InjectRepository(SetorEntity)
+    private setorRepository: Repository<SetorEntity>,
+    @InjectRepository(OngsEntity)
+    private ongsRepository: Repository<OngsEntity>,
+  ) {}
   
   
 
@@ -62,7 +63,7 @@ import { OngsEntity } from 'src/ongs/ongs.entity';
     async create(dto: SetorDto) {
       const newSetor = this.setorRepository.create(dto);
 
-      this.validateSetor(newSetor);
+      await this.validateSetor(newSetor);
   
       return this.setorRepository.save(newSetor);
     }
@@ -75,29 +76,29 @@ import { OngsEntity } from 'src/ongs/ongs.entity';
       return this.setorRepository.save(setor);
     }
 
-    private validateSetor(setor: SetorEntity | SetorDto) {
-      this.validateSetorNome(setor.nome);
-      this.validateSetorInativacao(setor.id);
-      this.validateSetorNomeLength(setor.nome);
+    private async validateSetor(setor: SetorEntity | SetorDto) {
+      await this.validateSetorNome(setor.nome);
+      await this.validateSetorInativacao(setor.id);
+      await this.validateSetorNomeLength(setor.nome);
     }
 
-    private validateSetorNome(nome: string) {
-      const existingSetor =  this.setorRepository.findOne({ where: { nome } });
+    private async validateSetorNome(nome: string) {
+      const existingSetor = await  this.setorRepository.findOne({ where: { nome } });
       if (existingSetor) {
-        throw new Error('Um setor com esse nome já existe.');
+        throw new BadRequestException('Um setor com esse nome já existe.');
       }
     }
 
     private async validateSetorInativacao(setorId: string) {
       const ongs = await this.ongsRepository.find({ where: { setor: { id: setorId } } });
       if (ongs.length > 0) {
-        throw new Error('O setor não pode ser inativado enquanto houver ONGs associadas.');
+        throw new BadRequestException('O setor não pode ser inativado enquanto houver ONGs associadas.');
       }
     }
 
-    private validateSetorNomeLength(nome: string): void {
+    private async validateSetorNomeLength(nome: string) {
       if (nome.length < 3) {
-        throw new Error('O nome do setor deve ter pelo menos 3 caracteres.');
+        throw new BadRequestException('O nome do setor deve ter pelo menos 3 caracteres.');
       }
     }
     
