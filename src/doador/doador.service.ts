@@ -51,7 +51,6 @@ export class DoadorService {
   }
 
   async update(id: string, doadorData: DoadorEntity): Promise<DoadorEntity> {
-    await this.validateDoadorData(doadorData, id);
     await this.doadorRepository.update(id, doadorData);
     return this.findOne(id);
   }
